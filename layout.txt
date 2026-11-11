@@ -12,7 +12,7 @@ Base Layout
 
 ESC Q W E R T Y U I O P BACKSPACE DEL
 
-TAB A S D F G H J K L ; .
+TAB A S D F G H J K L ; '
 
 SHIFT Z X C V B N M , . SLASH UP NEXT
 
