@@ -1,0 +1,6 @@
+(defcfg
+  input (device-file "/dev/input/by-id/usb-040b_Weltrend_USB_Mouse-event-kbd")
+  output (uinput-sink "Magicforce 49 (KMonad)")
+  fallthrough true
+  allow-cmd true)
+
