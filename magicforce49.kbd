@@ -1,6 +1,173 @@
+;; Qisan Magicforce 49-key KMonad configuration
+;;
+;; Based on:
+;;   - layout.txt in https://github.com/bendavisnc/magicforcekbd
+;;   - the manufacturer's 49-Key Mini Mechanical Keyboard Quick Start Guide
+;;
+;; The keyboard firmware handles its physical Fn combinations.  Those
+;; combinations arrive at the host as alternate keycodes (for example,
+;; Fn+H arrives as '[').  The extra entries at the end of defsrc are those
+;; firmware-generated keycodes; they let KMonad remap them independently
+;; of ordinary physical keys.  In particular, '[', ']', ';' and apostrophe
+;; become the four arrow keys as requested by the Base FN Layout.
+;;
+;; The two physical Fn switches are firmware controls and do not emit host
+;; key events, so they are omitted from defsrc rather than represented by
+;; placeholder keycodes. The right Shift key is remapped to Space.
+
 (defcfg
-  input (device-file "/dev/input/by-id/usb-040b_Weltrend_USB_Mouse-event-kbd")
+  input  (device-file "/dev/input/by-id/usb-040b_Weltrend_USB_Mouse-event-kbd")
   output (uinput-sink "Magicforce 49 (KMonad)")
   fallthrough true
-  allow-cmd true)
+  allow-cmd false
+)
 
+;; Physical source layout, followed by the additional keycodes emitted by
+;; the keyboard firmware when its hardware Fn key is held.
+(defsrc
+  esc  q    w    e    r    t    y    u    i    o    p    bspc del
+  caps a    s    d    f    g    h    j    k    l    ret  pgup
+  lsft z    x    c    v    b    n    m    ,    .    /    up   pgdn
+  lctl lmet lalt spc  rsft      rctl left down right
+
+  ;; Fn-generated keycodes (not additional physical keys)
+  grv  1    2    3    4    5    6    7    8    9    0    bksl ins
+  tab  f1   f2   f3   -    =    [    ]    ;    '    home
+  f4   f5   f6   f7   f8   f9   f10  f11  f12  sysrq end
+)
+
+(defalias
+  ;; FN2 is momentary. F/D/S momentarily activate fn2a/b/c.
+  ;; If FN2 is pressed again while the selector key is still held,
+  ;; add a distinct locked overlay. Releasing F/D/S then leaves that
+  ;; locked overlay active; pressing FN2 in it removes the lock.
+  fn2      (layer-toggle fn2)
+  to-a     (layer-toggle fn2a)
+  to-b     (layer-toggle fn2b)
+  to-c     (layer-toggle fn2c)
+  lock-a   (layer-add fn2a-locked)
+  lock-b   (layer-add fn2b-locked)
+  lock-c   (layer-add fn2c-locked)
+  unlock-a (layer-rem fn2a-locked)
+  unlock-b (layer-rem fn2b-locked)
+  unlock-c (layer-rem fn2c-locked)
+
+  ;; Shifted US punctuation used by the FN2B/FN2C layouts.
+  uscore (around lsft -)
+  tilde  (around lsft grv)
+  dollar (around lsft 4)
+  pct    (around lsft 5)
+  caret  (around lsft 6)
+  bang   (around lsft 1)
+  atsign (around lsft 2)
+  hash   (around lsft 3)
+  lparen (around lsft 9)
+  rparen (around lsft 0)
+  lbrace (around lsft [)
+  rbrace (around lsft ])
+)
+
+;; Base Layout from layout.txt.
+;; The source Enter and PageUp keys become ';' and '.' respectively.
+(deflayer base
+  esc  q    w    e    r    t    y    u    i    o    p    bspc del
+  tab  a    s    d    f    g    h    j    k    l    ;    .
+  lsft z    x    c    v    b    n    m    ,    .    /    up   pgdn
+  lctl lmet lalt @fn2 spc      rctl left down right
+
+  ;; Fn-generated keycodes.  Most pass through unchanged.  The four
+  ;; navigation remaps implement Base FN Layout (H/J/K/L -> arrows).
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    _    _    _    _    left down up   right _
+  _    _    _    _    _    _    _    _    _    _    _
+)
+
+;; Holding FN2 exposes the selection layer:
+;;   FN2+F -> numeric keypad
+;;   FN2+D -> symbols
+;;   FN2+S -> brackets/parentheses/braces
+;; FN2+J/K provide Enter/Escape as described in layout.txt.
+(deflayer fn2
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _    _    @to-c @to-b @to-a _    _    ret  esc  _    _    _
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
+
+;; FN2A: numeric keypad. It is momentary while F is held. Press FN2
+;; again while still holding F to add fn2a-locked and latch this layout.
+(deflayer fn2a
+  _    _    _    _    _    _    _    key7  key8  key9  _    _    _
+  _    _    _    _    _    _    _    key4  key5  key6  _    _
+  _    _    _    _    _    _    _    key1  key2  key3  key0  _    _
+  _ _ _ @lock-a _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
+
+;; Locked FN2A overlay. It duplicates the numeric layout and provides
+;; an FN2 key that removes only the locked overlay.
+(deflayer fn2a-locked
+  _    _    _    _    _    _    _    key7  key8  key9  _    _    _
+  _    _    _    _    _    _    _    key4  key5  key6  _    _
+  _    _    _    _    _    _    _    key1  key2  key3  key0  _    _
+  _ _ _ @unlock-a _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
+
+;; FN2B: symbols.
+(deflayer fn2b
+  _    _    _    _    _    _    _    -      @uscore @tilde _    _    _
+  _    _    _    _    _    _    _    @dollar @pct    @caret _    _
+  _    _    _    _    _    _    _    @bang   @atsign @hash _    _    _
+  _ _ _ @lock-b _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
+
+;; Locked FN2B overlay.
+(deflayer fn2b-locked
+  _    _    _    _    _    _    _    -      @uscore @tilde _    _    _
+  _    _    _    _    _    _    _    @dollar @pct    @caret _    _
+  _    _    _    _    _    _    _    @bang   @atsign @hash _    _    _
+  _ _ _ @unlock-b _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
+
+;; FN2C: brackets, parentheses and braces.
+(deflayer fn2c
+  _    _    _    _    _    _    _    [       ]       _    _    _    _
+  _    _    _    _    _    _    _    @lparen @rparen _    _    _
+  _    _    _    _    _    _    _    @lbrace @rbrace _    _    _    _
+  _ _ _ @lock-c _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
+
+;; Locked FN2C overlay.
+(deflayer fn2c-locked
+  _    _    _    _    _    _    _    [       ]       _    _    _    _
+  _    _    _    _    _    _    _    @lparen @rparen _    _    _
+  _    _    _    _    _    _    _    @lbrace @rbrace _    _    _    _
+  _ _ _ @unlock-c _ _ _ _ _
+
+  _    _    _    _    _    _    _    _    _    _    _    _    _
+  _ _ _ _ _ _ _ _ _ _ _
+  _ _ _ _ _ _ _ _ _ _ _
+)
