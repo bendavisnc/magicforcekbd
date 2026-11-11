@@ -1,79 +1,127 @@
-
 Source Layout
 
-    ESC       Q       W       E       R       T       Y       U       I       O       P       BACKSPACE  DEL
-    CAPS      A       S       D       F       G       H       J       K       L       ENTER              PGUP
-    SHIFT     Z       X       C       V       B       N       M       ,       .       SLASH   UP         NEXT
-    CTRL      CMD     ALT     FN      SPACE           SHIFT           FN      CTRL    LEFT    DOWN       RIGHT
+ESC Q W E R T Y U I O P BACKSPACE DEL
 
+CAPS A S D F G H J K L ENTER PGUP
+
+SHIFT Z X C V B N M , . SLASH UP NEXT
+
+CTRL CMD ALT FN SPACE SHIFT FN CTRL LEFT DOWN RIGHT
 
 Base Layout
 
-    ESC       Q       W       E       R       T       Y       U       I       O       P       BACKSPACE  DEL
-    TAB       A       S       D       F       G       H       J       K       L       ;                  .
-    SHIFT     Z       X       C       V       B       N       M       ,       .       SLASH   UP         NEXT
-    CTRL      CMD     ALT     FN      FN2             SPACE           FN      CTRL    LEFT    DOWN       RIGHT
+ESC Q W E R T Y U I O P BACKSPACE DEL
 
+TAB A S D F G H J K L ; .
+
+SHIFT Z X C V B N M , . SLASH UP NEXT
+
+CTRL CMD ALT FN FN2 SPACE FN CTRL LEFT DOWN RIGHT
 
 FN2 Layout
 
-    _         _       _       _       _       _       _       _       _       _       _       _          _
-    _         _       _       _       _       _       _       ENTER   ESCAPE  _       _                  _
-    _         _       _       _       _       _       _       _       _       _       _       _          _
-    _         _       _       _       _               _                       _       _       _          _
+_ _ _ _ _ _ _ _ _ _ _ _ _
 
+_ _ _ _ _ _ _ ENTER ESCAPE _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _
 
 Source FN Layout
 
-    `         1       2       3       4       5       6       7       8       9       0       \          Insert
-    Tab       F1      F2      F3      -       =       [       ]       ;       ,       '       _          Home
-    _         F4      F5      F6      F7      F8      F9      F10     F11     F12     PRT_SC  _          End
-    _         _       _       _       _               _                       _       _       _          _
+` 1 2 3 4 5 6 7 8 9 0 \\ Insert
+Tab F1 F2 F3 - = [ ] ; , ' _ Home
 
+_ F4 F5 F6 F7 F8 F9 F10 F11 F12 PRT_SC _ End
+
+_ _ _ _ _ _ _ _ _ _
 
 Base FN Layout
-    _         _       _       _       _       _       _       _       _       _       _       _          _
-    _         _       _       _       _       _       LEFT    DOWN    UP      RIGHT   _                  _
-    _         _       _       _       _       _       _       _       _       _       _       _          _
-    _         _       _       _       _               _                       _       _       _          _
 
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ LEFT DOWN UP RIGHT _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _
 
 FN2A Layout
 
-    _         _       _       _       _       _       _       7       8       9       _       _          _
-    _         _       _       _       _       _       _       4       5       6       _                  _
-    _         _       _       _       _       _       _       1       2       3       0       _          _
-    _         _       _       _       _               _                       _       _       _          _
+_ _ _ _ _ _ _ 7 8 9 _ _ _
 
+_ _ _ _ _ _ _ 4 5 6 _ _
+
+_ _ _ _ _ _ _ 1 2 3 0 _ _
+
+_ _ _ _ _ _ _ _ _ _
 
 FN2B Layout
 
-    _         _       _       _       _       _       _       -      `_`      ~       _       _          _
-    _         _       _       _       _       _       _       $       %       ^       _                  _
-    _         _       _       _       _       _       _       !       @       #       _       _          _
-    _         _       _       _       _               _                       _       _       _          _
+_ _ _ _ _ _ _ - `_` ~ _ _ _
 
+_ _ _ _ _ _ _ $ % ^ _ _
+
+_ _ _ _ _ _ _ ! @ # _ _ _
+
+_ _ _ _ _ _ _ _ _ _
 
 FN2C Layout
 
-    _         _       _       _       _       _       _       [       ]       _       _       _          _
-    _         _       _       _       _       _       _       (       )       _       _                  _
-    _         _       _       _       _       _       _       {       }       _       _       _          _
-    _         _       _       _       _               _                       _       _       _          _
+_ _ _ _ _ _ _ [ ] _ _ _ _
 
+_ _ _ _ _ _ _ ( ) _ _ _
+
+_ _ _ _ _ _ _ { } _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _
 
 Notes
-  FN2_ Keycodes
-    FN2A, F
-    FN2B, D
-    FN2C, S
 
-  FN2_ behavior
-    for example, 
-      Hold FN2 and F -> Toggles FN2A layout
-      Hold FN2 and F, release and press FN2 -> Locks FN2A layout (next FN2 press unlocks)
+FN2 sublayer selectors
 
+FN2A is selected with FN2 + F.
+FN2B is selected with FN2 + D.
+FN2C is selected with FN2 + S.
 
-  `_` means the underscore key
-  _ means not defined for layout
-  FN is a physical key, so for example, FN + H -> [, so [ needs to be remapped to LEFT
+FN2 sublayer activation and locking behavior
+
+Each FN2 sublayer has the same activation and locking behavior. The examples
+below use FN2A (selected with F); apply the same behavior to FN2B/D and
+FN2C/S.
+
+Momentary activation:
+
+1. Press and hold FN2.
+2. While holding FN2, press and hold F.
+3. FN2A is active only while F remains held.
+4. Releasing F deactivates FN2A and returns to the base layout. This is true
+even if FN2 is still held.
+
+Locking the selected sublayer:
+
+1. Press and hold FN2.
+2. Press and hold F; FN2A becomes active.
+3. While continuing to hold F, release FN2.
+4. Still holding F, press FN2 again.
+5. FN2A is now locked. Releasing F does not deactivate it.
+6. Press FN2 again to unlock FN2A and return to the base layout.
+
+The lock gesture is specifically a release-and-repress of FN2 while the
+sublayer selector key (F, D, or S) remains held. Merely releasing FN2, or
+releasing the selector before pressing FN2 again, must not lock the layer.
+
+Only one FN2 sublayer should be active at a time. Locking a different FN2
+sublayer should replace the previously locked FN2 sublayer.
+
+Key notation
+
+`_` (backtick, underscore, backtick) means the underscore key.
+
+A bare `_` means that the position is not defined for that layout.
+
+FN is a physical keyboard key. The keyboard firmware translates FN
+combinations before they reach the host. For example, physical FN + H
+produces `[`. Therefore, remap the resulting `[` keycode to LEFT in the
+Base FN Layout rather than trying to remap the physical FN + H combination.
