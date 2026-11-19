@@ -1,4 +1,4 @@
-Source Layout
+;; Source Layout
 
 ESC Q W E R T Y U I O P BACKSPACE DEL
 
@@ -8,7 +8,7 @@ SHIFT Z X C V B N M , . SLASH UP NEXT
 
 CTRL CMD ALT FN SPACE SHIFT FN CTRL LEFT DOWN RIGHT
 
-Base Layout
+;; Base Layout
 
 ESC Q W E R T Y U I O P BACKSPACE DEL
 
@@ -18,17 +18,17 @@ SHIFT Z X C V B N M , . SLASH UP NEXT
 
 CTRL CMD ALT FN FN2 SPACE FN CTRL LEFT DOWN RIGHT
 
-FN2 Layout
+;; FN2 Layout
 
-_ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ to-f to-e to-d _ _ _ _ _ _ _ _
 
-_ _ _ _ _ _ _ ENTER ESCAPE _ _ _
+_ _ to-c to-b to-a _ _ ENTER ESCAPE _ _ _
 
-_ _ _ _ _ _ _ _ _ _ _ _ _
+_ _ to-i to-h to-g _ _ _ _ _ _ _ _
 
-_ _ _ _ _ _ _ _ _ _
+_ _ _ _ _ F22 _ _ _ _
 
-Source FN Layout
+;; Source FN Layout
 
 ` 1 2 3 4 5 6 7 8 9 0 \\ Insert
 Tab F1 F2 F3 - = [ ] ; , ' _ Home
@@ -37,7 +37,7 @@ _ F4 F5 F6 F7 F8 F9 F10 F11 F12 PRT_SC _ End
 
 _ _ _ _ _ _ _ _ _ _
 
-Base FN Layout
+;; Base FN Layout
 
 _ _ _ _ _ _ _ _ _ _ _ _ _
 
@@ -47,7 +47,7 @@ _ _ _ _ _ _ _ _ _ _ _ _ _
 
 _ _ _ _ _ _ _ _ _ _
 
-FN2A Layout
+;; FN_Numbers Layout
 
 _ _ _ _ _ _ _ 7 8 9 _ _ _
 
@@ -57,17 +57,17 @@ _ _ _ _ _ _ _ 1 2 3 0 _ _
 
 _ _ _ _ _ _ _ _ _ _
 
-FN2B Layout
+;; FN_Special Layout
 
 _ _ _ _ _ _ _ - `_` ~ _ _ _
 
-_ _ _ _ _ _ _ $ % ^ _ _
+_ _ _ _ _ _ : $ % ^ _ _
 
 _ _ _ _ _ _ _ ! @ # _ _ _
 
 _ _ _ _ _ _ _ _ _ _
 
-FN2C Layout
+;; FN_Paren Layout
 
 _ _ _ _ _ _ _ [ ] _ _ _ _
 
@@ -77,36 +77,81 @@ _ _ _ _ _ _ _ { } _ _ _ _
 
 _ _ _ _ _ _ _ _ _ _
 
+;; FN_Secrets Layout
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ `secret1` _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _
+
+;; FN_Words Layout
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ `word1` _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _
+
+;; FN_Vol Layout
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ volumedown volumeup _ _ _
+
+_ _ _ _ _ _ _ _ _ _ _ _ _
+
+_ _ _ _ _ _ _ _ _ _
+
+;; FN_Fs Layout
+
+_ _ _ _ _ _ _ F13 F14 F15 _ _ _
+
+_ _ _ _ _ _ _ F16 F17 F18 _ _
+
+_ _ _ _ _ _ _ F19 F20 F21 _ _ _
+
+_ _ _ _ _ _ _ _ _ _
+
+
 Notes
 
 FN2 sublayer selectors
 
-FN2A is selected with FN2 + F.
-FN2B is selected with FN2 + D.
-FN2C is selected with FN2 + S.
+FN_Special = layer a
+FN_Paren = layer b
+FN_Fs = layer c
+FN_Numbers = layer d
+FN_Secrets = layer e
+FN_Words = layer f
+FN_Vol = layer g
 
 FN2 sublayer activation and locking behavior
 
 Each FN2 sublayer has the same activation and locking behavior. The examples
-below use FN2A (selected with F); apply the same behavior to FN2B/D and
-FN2C/S.
+below use FN_Numbers (selected with F); apply the same behavior to FN_Special/D and
+FN_Paren/S.
 
 Momentary activation:
 
 1. Press and hold FN2.
 2. While holding FN2, press and hold F.
-3. FN2A is active only while F remains held.
-4. Releasing F deactivates FN2A and returns to the base layout. This is true
+3. FN_Numbers is active only while F remains held.
+4. Releasing F deactivates FN_Numbers and returns to the base layout. This is true
 even if FN2 is still held.
 
 Locking the selected sublayer:
 
 1. Press and hold FN2.
-2. Press and hold F; FN2A becomes active.
+2. Press and hold F; FN_Numbers becomes active.
 3. While continuing to hold F, release FN2.
 4. Still holding F, press FN2 again.
-5. FN2A is now locked. Releasing F does not deactivate it.
-6. Press FN2 again to unlock FN2A and return to the base layout.
+5. FN_Numbers is now locked. Releasing F does not deactivate it.
+6. Press FN2 again to unlock FN_Numbers and return to the base layout.
 
 The lock gesture is specifically a release-and-repress of FN2 while the
 sublayer selector key (F, D, or S) remains held. Merely releasing FN2, or
@@ -120,6 +165,9 @@ Key notation
 `_` (backtick, underscore, backtick) means the underscore key.
 
 A bare `_` means that the position is not defined for that layout.
+
+`secret1` = type "guest" with an in between delay of half a second 
+`word1` = type "bob@conglomo.com" with an in between delay of half a second 
 
 FN is a physical keyboard key. The keyboard firmware translates FN
 combinations before they reach the host. For example, physical FN + H
