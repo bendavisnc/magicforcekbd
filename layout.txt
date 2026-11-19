@@ -169,6 +169,8 @@ A bare `_` means that the position is not defined for that layout.
 `secret1` = type "guest" with an in between delay of half a second 
 `word1` = type "bob@conglomo.com" with an in between delay of half a second 
 
+numbers should use `key`, not `kp`. eg, not `kp7`, instead `key7`
+
 FN is a physical keyboard key. The keyboard firmware translates FN
 combinations before they reach the host. For example, physical FN + H
 produces `[`. Therefore, remap the resulting `[` keycode to LEFT in the
